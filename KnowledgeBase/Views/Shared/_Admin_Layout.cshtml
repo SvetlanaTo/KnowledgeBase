@@ -1,0 +1,122 @@
+﻿
+@using KnowledgeBase.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside class="left-side sidebar-offcanvas">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                @if (@User.IsInRole("Admin") || @User.IsInRole("Manager"))
+                {
+                    <li>
+                        <div>
+
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Settings" asp-action="Index">Settings</a>
+                        </div>
+                    </li>
+                }
+                <li>
+                    <div>
+
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Articles" asp-action="Create">CreateArticle</a>
+                    </div>
+                </li>
+                @if (@User.IsInRole("Admin") || @User.IsInRole("Manager"))
+                {
+                    <li>
+                        <div>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CategoriesNewCode" asp-action="Create">CreateCategory</a>
+                        </div>
+                    </li>
+                }
+                <li class="treeview active">
+                    <div>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="CategoriesNewCode" asp-action="Index">Categories</a>
+                    </div>
+
+                    @* todo: VRATI SE - primeni metodu za kreiranje menija *@
+                    @*@KnowledgeBase.Helpers.KBVaultHelperFunctions.CreateCategoryMenu()*@
+
+                </li>
+                @if (@User.IsInRole("Admin"))
+                {
+                    <li>
+                        <div>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Users</a>
+                        </div>
+                    </li>
+                }
+                @if (@User.IsInRole("Admin") || @User.IsInRole("Manager"))
+                {
+                    <li>
+                        <div>
+
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tags" asp-action="Index">Tags</a>
+                        </div>
+                    </li>
+                }
+                @if (@User.IsInRole("Admin"))
+                {
+                    <li>
+                        <div>
+                            <a href='@Url.Action("Index", "Activity")'>
+                                <i class="fa fa-desktop"></i>
+                                @*@Resources.UIResources.LeftSideBarActivitiesTitle*@
+                                ActivitiesTitle - NIJE SREDJENO
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href="@Url.Action("Index","Backup")">
+                                <i class="fa fa-briefcase"></i>
+                                @*@Resources.UIResources.LeftSideBarBackupTitle*@
+                                BackupTitle - NIJE SREDJENO
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href="@Url.Action("Index","Indexing")">
+                                <i class="fa fa-book"></i>
+                                @*@Resources.UIResources.IndexingLeftMenuTitle*@
+                                MenuTitle - NIJE SREDJENO
+                            </a>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+        </section>
+    </aside>
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            @RenderSection("ContentHeader", required: false)
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            @if (ViewBag.ShowOperationMessage != null && ViewBag.ShowOperationMessage)
+            {
+                <div class="alert alert-success alert-dismissable">
+                    <i class="fa fa-check"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    @ViewBag.OperationMessage
+                </div>
+            }
+            @if (ViewBag.ShowErrorMessage != null && ViewBag.ShowErrorMessage)
+            {
+                <div class="alert alert-danger alert-dismissable">
+                    <i class="fa fa-check"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+            @RenderBody()
+        </section>
+    </aside>
+</div>
+
+

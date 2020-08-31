@@ -1,0 +1,70 @@
+﻿@{
+    //ViewBag.Title = Resources.UIResources.ActivitiesPageTitle;
+    ViewBag.Title = "ActivitiesPageTitle";
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+@section ContentHeader{
+    <h1>
+        @ViewBag.Title
+    </h1>
+}
+
+@section Scripts{
+
+    $(document).ready(function() {
+    $('#activity-list').dataTable( {
+    "processing": true,
+    "serverSide": true,
+    "sDom": '<"top"r>t<"bottom"ip><"clear">',
+    "searching" : false,
+    "ordering":false,
+    "iDisplayLength": 20,
+    "lengthChange": false,
+    "dataSrc": "Data",
+    "ajax": { url: "@Url.Action("Get")", type: 'POST' },
+    "language": {
+    @*"zeroRecords": "@Resources.UIResources.ActivitiesPageZeroRecords",*@
+    "zeroRecords": "ActivitiesPageZeroRecords",
+    @*"info": "@String.Format(Resources.UIResources.ActivitiesPageInfoText, "_PAGE_", "_PAGES_")",*@
+    "info": "@String.Format("ActivitiesPageInfoText", "_PAGE_", "_PAGES_")",
+    @*"infoEmpty": "@Resources.UIResources.ActivitiesPageInfoEmptyText",*@
+    "infoEmpty": "ActivitiesPageInfoEmptyText",
+    "paginate" : {
+    @*"first" :"@Resources.UIResources.ActivitiesPagePaginateFirst",*@
+    "first" :"ActivitiesPagePaginateFirst",
+    @*"last" :"@Resources.UIResources.ActivitiesPagePaginateLast",*@
+    "last" :"ActivitiesPagePaginateLast",
+    @*"next" :"@Resources.UIResources.ActivitiesPagePaginateNext",*@
+    "next" :"ActivitiesPagePaginateNext",
+    @*"previous" :"@Resources.UIResources.ActivitiesPagePaginatePrevious"*@
+    "previous" :"ActivitiesPagePaginatePrevious"
+    }
+    }
+    } );
+    } );
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body table-responsive">
+                <table class="table table-striped table-bordered" width="100%" cellspacing="0" id="activity-list">
+                    <thead>
+                        <tr>
+                            @*<th>@Resources.UIResources.ActivitiesPageDateColumnTitle</th>
+                                <th>@Resources.UIResources.ActivitiesPageOperationColumnTitle</th>
+                                <th>@Resources.UIResources.ActivitiesPageInformationColumnTitle</th>
+                                <th>@Resources.UIResources.ActivitiesPageUserColumnTitle</th>*@
+                            <th>ActivitiesPageDateColumnTitle</th>
+                            <th>ActivitiesPageOperationColumnTitle</th>
+                            <th>ActivitiesPageInformationColumnTitle</th>
+                            <th>ActivitiesPageUserColumnTitle</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

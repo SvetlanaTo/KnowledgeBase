@@ -1,0 +1,67 @@
+﻿@model KnowledgeBase.ViewModels.CategoryViewModel
+
+@{
+    //ViewBag.Title = UIResources.CategoryCreateFormPageTitle;
+    ViewBag.Title = "CategoryCreateFormPageTitle";
+
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+@*@section Scripts{
+    $("#Name").slugIt({output:"#SefName",events:"blur", map :{"'":"-"}});
+}*@
+@section ContentHeader{
+    <h1>
+        UIResources.CategoryCreateFormPageTitle
+        <!-- <small>Control panel</small> -->
+    </h1>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    <br />
+    <div class="form-group">
+        @*<label for="Name">@UIResources.CategoryCreateFormLabelCategory</label>*@
+        <label for="Name">Category Name</label>
+        <input type="text" class="form-control" name="Name" id="Name" />
+    </div>
+    <div class="form-group">
+        @*<label for="SefName">@UIResources.CategoryCreateFormSefNameLabel</label>*@
+        <label for="SefName">Sef Name </label>
+        <input type="text" class="form-control" name="SefName" id="SefName" />
+    </div>
+    <div class="form-group">
+        @*<label for="Icon">@UIResources.CategoryCreateFormLabelIcon</label>*@
+        <label for="Icon">Icon</label> 
+        <input type="text" class="form-control" name="Icon" id="Icon" />
+        @*<p class="danger"><i class="fa fa-info-circle"></i>&nbsp;@UIResources.CategoryCreateFormLabelIconInfo</p>*@
+        <p class="danger"><i class="fa fa-info-circle"></i>&nbsp;Icon Info</p>
+    </div>
+    <div class="form-group">
+        <span><i id="categoryIconPreview"></i></span>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="IsHot" value="true" />
+                @*@UIResources.CategoryCreateFormLabelIsHot*@
+                IsHot
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        @*<label for="ParentId">@UIResources.CategoryCreateFormLabelParent</label>*@
+        <label for="ParentId">Parent Category</label>
+        @*@Html.DropDownListFor(m => m.ParentId, KBVaultHelperFunctions.CategoryTreeForSelectList(-1), new { @class = "form-control" })*@
+        <select for="ParentId" class="form-control" asp-items="ViewBag.ParentCategoryId">
+            <option selected disabled value="Select">Select Parent Category</option>
+        </select>
+    </div>
+    <div class="form-group">
+        @*<input type="submit" class="btn btn-default" value="@CommonResources.ButtonSave" />*@
+        <input type="submit" class="btn btn-default" value="Save" />
+    </div>
+
+}

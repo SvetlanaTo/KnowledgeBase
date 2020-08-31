@@ -1,0 +1,32 @@
+﻿@model UpdateUserRole
+@inject RoleManager<IdentityRole> RoleManager
+
+<h1 class="bg-info text-white">Assign Role To User</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-controller="Admin" asp-action="AssignRole" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.User.Id"></label>
+
+        <input asp-for="@Model.User.Id" value="@Model.User.Id" class="form-control" disabled />
+    </div>
+
+    <div class="form-group">
+            <label asp-for="@Model.Role.Name"></label>
+            @if (Model.Roles.Count() == 0)
+            {
+                <p>No Roles found!</p>
+            }
+            else
+            {
+                <select asp-for="@Model.Role.Name" class="form-control" asp-items="@new SelectList(Model.Roles)" name="RoleName">
+                    <option selected disabled value="Select">Select Role</option>
+                </select>
+            }
+
+        </div>
+
+    <button type="submit" class="btn btn-primary">Assign Role</button>
+
+</form>

@@ -1,0 +1,33 @@
+﻿@model KnowledgeBase.ViewModels.Public.SearchFormViewModel
+
+@{ ViewBag.SearchTerm = Model.SearchKeyword;
+    ViewBag.Title = String.Format("SearchResultTitle", Model.SearchKeyword); }
+
+<h1 class="bg-info text-white">Search</h1>
+<div class="text-danger" asp-validation-summary="All"></div>
+
+<form asp-controller="Search" asp-action="Do" method="post">
+    <input type="hidden" asp-for="ArticleId" />
+    <div class="form-group">
+        <label asp-for="@Model.SearchKeyword"></label>
+        <input asp-for="@Model.SearchKeyword" class="form-control" />
+        @*<input asp-for="@Model.SearchKeyword" class="form-control" value="@searchTerm" />*@
+    </div>
+
+    <input type="submit" id="btnDoSearch" class="btn btn-primary" value="Search" />
+</form>
+
+<div class="col-lg-12" id="SearchResultContainer">
+   
+    @foreach (var result in Model.Results)
+    {
+    <div class="col-lg-12">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Detail" asp-route-id="@result.ArticleSefName">@result.ArticleTitle</a>
+    </div>
+    }
+
+</div>
+
+@* VRATI SEEE *@
+
+
