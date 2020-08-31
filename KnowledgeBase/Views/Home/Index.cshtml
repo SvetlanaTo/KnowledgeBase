@@ -6,156 +6,156 @@
 
 @if (User.Identity?.IsAuthenticated ?? false)
 {
-<div class="container">
-    <h1 class="bg-info text-white">Index</h1>
-    <div class="row">
-        @using (Html.BeginForm("Do", "Search", FormMethod.Post, new { id = "SearchForm" }))
-        {
-<div class="input-group">
-    <input type="hidden" name="ArticleId" id="ArticleId" value="" />
-    <input type="text" class="form-control search-control" placeholder="Enter search text" ID="txtSearch" name="SearchKeyword" />
-    <span class="input-group-btn">
-        @*<input type="submit" id="btnDoSearch" class="btn btn-default" value="@CommonResources.ButtonSearch" />*@
-        @* izmena za hit test *@
-        <input type="submit" id="btnDoSearch" class="btn btn-default" value="ButtonSearch" />
-    </span>
-</div>}
-        <div class="clearfix">&nbsp;</div>
-    </div>
-    <div class="row">
-        @if (ViewBag.ShowTotalArticleCountOnFrontPage)
-        {
-<div class="row">
     <div class="container">
-        @Model.TotalArticleCountMessage
-    </div>
-</div>
-
-                    <div class="clearfix">&nbsp;</div>}
-    </div>
-    <div class="row">
-
-        @*IZLISTANE SVE KATEGORIJE*@
-        <div class="col-lg-3">
-            @*<h4 class="section-title">@UIResources.LandingSidebarCategoryListTitle</h4>*@
-            <h4 class="section-title">Sidebar Category List</h4>
-            <div>
-                @foreach (Category category in Model.FirstLevelCategories)
-                {
-<div class="row">
-    <i class="fa fa-arrow-circle-o-right text-muted"></i>
-    @*<a href="@Url.Action("Categories", "Home", new { id = category.SefName })">@category.Name</a>*@
-    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Categories" asp-route-id="@category.SefName"> @category.Name </a>
-
-    @* <span class="badge">@category.Articles.Count</span> *@
-</div>}
-            </div>
+        <h1 class="bg-info text-white">Index</h1>
+        <div class="row">
+            @using (Html.BeginForm("Do", "Search", FormMethod.Post, new { id = "SearchForm" }))
+            {
+                <div class="input-group">
+                    <input type="hidden" name="ArticleId" id="ArticleId" value="" />
+                    <input type="text" class="form-control search-control" placeholder="Enter search text" ID="txtSearch" name="SearchKeyword" />
+                    <span class="input-group-btn">
+                        @*<input type="submit" id="btnDoSearch" class="btn btn-default" value="@CommonResources.ButtonSearch" />*@
+                        @* izmena za git test *@
+                        <input type="submit" id="btnDoSearch" class="btn btn-default" value="ButtonSearch" />
+                    </span>
+                </div>}
+            <div class="clearfix">&nbsp;</div>
         </div>
+        <div class="row">
+            @if (ViewBag.ShowTotalArticleCountOnFrontPage)
+            {
+                <div class="row">
+                    <div class="container">
+                        @Model.TotalArticleCountMessage
+                    </div>
+                </div>
 
+                <div class="clearfix">&nbsp;</div>}
+        </div>
+        <div class="row">
 
-
-        @*MAIN SEKCIJA*@
-        <div class="col-lg-6">
-            <h4 class="section-title clearfix">
-                @*<span class="line"></span><i class="fa fa-folder-open-o fa-fw text-muted"></i>@UIResources.LandingHotCategoryHeader*@
-                <span class="line"></span><i class="fa fa-folder-open-o fa-fw text-muted"></i>Landing Hot Category Header
-            </h4>
-
-            <div class="row">
-                <div class="container">
-                    @foreach (var category in Model.HotCategories)
+            @*IZLISTANE SVE KATEGORIJE*@
+            <div class="col-lg-3">
+                @*<h4 class="section-title">@UIResources.LandingSidebarCategoryListTitle</h4>*@
+                <h4 class="section-title">Sidebar Category List</h4>
+                <div>
+                    @foreach (Category category in Model.FirstLevelCategories)
                     {
-    <div class="col-lg-6">
-        <div class="row">
-            <i class="fa fa-folder-open-o fa-fw text-muted"></i>
-            @category.Name
-            <span class="badge">@category.Articles.Count</span>
-        </div>
-        <div class="row">
-            <ul class="fa-ul">
+                        <div class="row">
+                            <i class="fa fa-arrow-circle-o-right text-muted"></i>
+                            @*<a href="@Url.Action("Categories", "Home", new { id = category.SefName })">@category.Name</a>*@
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Categories" asp-route-id="@category.SefName"> @category.Name </a>
 
-                @if (@category.Articles.Count > 0)
-                {@*@foreach (var article in category.Articles.Take((int)ViewBag.ArticleDisplayCount))*@
+                            @* <span class="badge">@category.Articles.Count</span> *@
+                        </div>}
+                </div>
+            </div>
+
+
+
+            @*MAIN SEKCIJA*@
+            <div class="col-lg-6">
+                <h4 class="section-title clearfix">
+                    @*<span class="line"></span><i class="fa fa-folder-open-o fa-fw text-muted"></i>@UIResources.LandingHotCategoryHeader*@
+                    <span class="line"></span><i class="fa fa-folder-open-o fa-fw text-muted"></i>Landing Hot Category Header
+                </h4>
+
+                <div class="row">
+                    <div class="container">
+                        @foreach (var category in Model.HotCategories)
+                        {
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <i class="fa fa-folder-open-o fa-fw text-muted"></i>
+                                    @category.Name
+                                    <span class="badge">@category.Articles.Count</span>
+                                </div>
+                                <div class="row">
+                                    <ul class="fa-ul">
+
+                                        @if (@category.Articles.Count > 0)
+                                        {@*@foreach (var article in category.Articles.Take((int)ViewBag.ArticleDisplayCount))*@
                                         @foreach (var article in category.Articles)
                                         {
-                <li>
-                    <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
-                    @*<a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
-                </li>
-} }
+                                            <li>
+                                                <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
+                                                @*<a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
+                                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
+                                            </li>
+                                        } }
                                     else
                                     {
-                <li>category.Articles.Count = 0</li>
-}
+                                        <li>category.Articles.Count = 0</li>
+                                    }
 
-            </ul>
+                                    </ul>
+                                </div>
+                            </div>}
+                    </div>
+                </div>
+
+                <div class="clearfix">&nbsp;</div>
+
+                <div class="row">
+                    <div class="container">
+                        <div class="col-lg-6">
+                            <h4 class="section-title clearfix">
+                                @*<span class="line"></span>@UIResources.LandingLatestArticlesTitle*@
+                                <span class="line"></span>LandingLatestArticlesTitle
+                            </h4>
+                            <div class="row">
+                                <ul class="fa-ul">
+                                    @foreach (var article in Model.LatestArticles)
+                                    {
+                                        <li>
+                                            <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
+
+                                            @*<a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h4 class="section-title clearfix">
+                                @*<span class="line"></span>@UIResources.LandingPopularArticlesTitle*@
+                                <span class="line"></span>LandingPopularArticlesTitle
+
+                            </h4>
+                            <div class="row">
+                                <ul class="fa-ul">
+                                    @foreach (var article in Model.PopularArticles)
+                                    {
+                                        <li>
+                                            <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
+                                            @* <a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
+
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @*TAGOVI*@
+            <div class="col-lg-3">
+
+                <div class="col-lg-12">&nbsp; PopularTags</div>
+
+                @if (Model.PopularTags.Count > 0)
+                {@*@Html.PartialAsync("_TagCloud", Model.PopularTags)*@
+
+                @foreach (var tag in Model.PopularTags)
+                {
+                    <a class="btn-xs btn btn-primary" href='@Url.Action("Tags","Home",new{id=tag.Name})'>
+                        @tag.Name
+                    </a>}}
+            </div>
         </div>
+
     </div>}
-                </div>
-            </div>
-
-            <div class="clearfix">&nbsp;</div>
-
-            <div class="row">
-                <div class="container">
-                    <div class="col-lg-6">
-                        <h4 class="section-title clearfix">
-                            @*<span class="line"></span>@UIResources.LandingLatestArticlesTitle*@
-                            <span class="line"></span>LandingLatestArticlesTitle
-                        </h4>
-                        <div class="row">
-                            <ul class="fa-ul">
-                                @foreach (var article in Model.LatestArticles)
-                                {
-                <li>
-                    <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
-
-                    @*<a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
-                </li>
-}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <h4 class="section-title clearfix">
-                            @*<span class="line"></span>@UIResources.LandingPopularArticlesTitle*@
-                            <span class="line"></span>LandingPopularArticlesTitle
-
-                        </h4>
-                        <div class="row">
-                            <ul class="fa-ul">
-                                @foreach (var article in Model.PopularArticles)
-                                {
-                <li>
-                    <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
-                    @* <a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
-
-                </li>
-}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        @*TAGOVI*@
-        <div class="col-lg-3">
-
-            <div class="col-lg-12">&nbsp; PopularTags</div>
-
-            @if (Model.PopularTags.Count > 0)
-            {@*@Html.PartialAsync("_TagCloud", Model.PopularTags)*@
-
-                                @foreach (var tag in Model.PopularTags)
-                                {
-            <a class="btn-xs btn btn-primary" href='@Url.Action("Tags","Home",new{id=tag.Name})'>
-                @tag.Name
-            </a>}}
-        </div>
-    </div>
-
-</div>}
