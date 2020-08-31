@@ -16,6 +16,7 @@
     <input type="text" class="form-control search-control" placeholder="Enter search text" ID="txtSearch" name="SearchKeyword" />
     <span class="input-group-btn">
         @*<input type="submit" id="btnDoSearch" class="btn btn-default" value="@CommonResources.ButtonSearch" />*@
+        @* izmena za hit test *@
         <input type="submit" id="btnDoSearch" class="btn btn-default" value="ButtonSearch" />
     </span>
 </div>}
@@ -81,10 +82,12 @@
                     <i class="fa-li fa fa-list-alt fa-fw text-muted"></i>
                     @*<a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
-                </li>} }
+                </li>
+} }
                                     else
                                     {
-                <li>category.Articles.Count = 0</li>}
+                <li>category.Articles.Count = 0</li>
+}
 
             </ul>
         </div>
@@ -110,7 +113,8 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
 
                     @*<a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
-                </li>}
+                </li>
+}
                             </ul>
                         </div>
                     </div>
@@ -129,7 +133,8 @@
                     @* <a href='@Url.Action("Detail", "Home", new { id = article.SefName })'>@article.Title</a>*@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Details" asp-route-id="@article.SefName"> acticle title: @article.Title </a>
 
-                </li>}
+                </li>
+}
                             </ul>
                         </div>
                     </div>
