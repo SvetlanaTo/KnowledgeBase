@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 3108\\KnowledgeBase\\KnowledgeBase.csproj": {}
+    "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 0109\\KnowledgeBase\\KnowledgeBase.csproj": {}
   },
   "projects": {
-    "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 3108\\KnowledgeBase\\KnowledgeBase.csproj": {
+    "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 0109\\KnowledgeBase\\KnowledgeBase.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 3108\\KnowledgeBase\\KnowledgeBase.csproj",
+        "projectUniqueName": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 0109\\KnowledgeBase\\KnowledgeBase.csproj",
         "projectName": "KnowledgeBase",
-        "projectPath": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 3108\\KnowledgeBase\\KnowledgeBase.csproj",
+        "projectPath": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 0109\\KnowledgeBase\\KnowledgeBase.csproj",
         "packagesPath": "C:\\Users\\Developer 08\\.nuget\\packages\\",
-        "outputPath": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 3108\\KnowledgeBase\\obj\\",
+        "outputPath": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 0109\\KnowledgeBase\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

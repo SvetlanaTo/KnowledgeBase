@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vLUaRIlMDih/H4hKxUuV+uTrlYzTuaY2BP+N1uihH76qVoU5VrlU3kPUvkFlPyXA9ql5wnhcSp15j/fQcz9b4g==",
+  "dgSpecHash": "aiIkgMxf63m2LwKHry4elYtKbF9MB6BNAADmpOCHFKzd03uRSDhupD/Thf3dylHsKncck21uUMUgHW1TWSn2zQ==",
   "success": true,
-  "projectFilePath": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 3108\\KnowledgeBase\\KnowledgeBase.csproj",
+  "projectFilePath": "D:\\Svetlana\\2-Baza Znanja\\00 - new era\\stari kod\\KnowledgeBase - 0109\\KnowledgeBase\\KnowledgeBase.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Developer 08\\.nuget\\packages\\korzh.easyquery\\5.4.0\\korzh.easyquery.5.4.0.nupkg.sha512",
     "C:\\Users\\Developer 08\\.nuget\\packages\\korzh.easyquery.db\\5.4.0\\korzh.easyquery.db.5.4.0.nupkg.sha512",
