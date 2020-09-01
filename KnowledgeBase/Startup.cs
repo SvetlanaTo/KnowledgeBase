@@ -21,6 +21,7 @@ using KnowledgeBase.Business.ApplicationSettings;
 using KnowledgeBase.Business.Articles;
 using KnowledgeBase.Business.Categories;
 using KnowledgeBase.Helpers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace KnowledgeBase
 {
@@ -89,6 +90,8 @@ namespace KnowledgeBase
                 });
             });
 
+
+
             services.AddAuthentication().AddGoogle(opts =>
             {
                 opts.ClientId = "280902487776-8re3f4rmntj07sl8ikd3k4vmkfi339kv.apps.googleusercontent.com";
@@ -110,6 +113,10 @@ namespace KnowledgeBase
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<KnowledgeBaseContext>().AddDefaultTokenProviders();
             services.AddMvc();
+
+
+            //0109
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.ConfigureApplicationCookie(config =>
             {

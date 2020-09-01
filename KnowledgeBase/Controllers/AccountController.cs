@@ -4,6 +4,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using KnowledgeBase.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace KnowledgeBase.Controllers
 {
     public class AccountController : Controller
-    {      
-        private UserManager<AppUser> userManager;   
+    {
+        private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
 
         public AccountController(UserManager<AppUser> userMgr, SignInManager<AppUser> signinMgr)
@@ -38,21 +40,53 @@ namespace KnowledgeBase.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(Login login)
+        public async Task<IActionResult> Login(Login model)
         {
             if (ModelState.IsValid)
             {
-                AppUser appUser = await userManager.FindByEmailAsync(login.Email);
+                AppUser appUser = await userManager.FindByEmailAsync(model.Email);
                 if (appUser != null)
                 {
+                    //await signInManager.SignOutAsync();
+                    //Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, login.Password, false, false);
+                    //if (result.Succeeded)
+                    //    return Redirect(login.ReturnUrl ?? "/");
+
+                    //0109
+                    var claims = new List<Claim>();
+
+                    claims.Add(new Claim(ClaimTypes.Name, appUser.UserName));
+
+                    //string[] roles = appUser.Roles.Split(",");
+                    List<string> roles = (List<string>)await userManager.GetRolesAsync(appUser);
+
+                    foreach (string role in roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
+
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var principal = new ClaimsPrincipal(identity);
+
+                    var props = new AuthenticationProperties();
+                    props.IsPersistent = model.RememberMe;
+
+                    //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
                     await signInManager.SignOutAsync();
-                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, login.Password, false, false);
+                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, model.Password, props.IsPersistent, false);
                     if (result.Succeeded)
-                        return Redirect(login.ReturnUrl ?? "/");
+                        return Redirect(model.ReturnUrl ?? "/");
+
+                    //return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(nameof(login.Email), "Login Failed: Invalid Email or password");
+                //else
+                //{
+                //    ViewData["message"] = "Invalid UserName or Password!";
+                //}
+                ModelState.AddModelError(nameof(model.Email), "Login Failed: Invalid Email or password");
             }
-            return View(login);
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()
