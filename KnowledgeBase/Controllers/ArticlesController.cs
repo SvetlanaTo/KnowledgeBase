@@ -26,16 +26,18 @@ namespace KnowledgeBase.Controllers
         private IArticleFactory _articleFactory;
         private IArticleRepository _articleRepository;
         private IUserRepository _userRepository;
+        private IActivityRepository _activityRepository;
         private KbVaultLuceneHelper _lucene;
         private KbVaultAttachmentHelper attachmentHelper;
 
-        public ArticlesController(KnowledgeBaseContext context, IHttpContextAccessor httpContextAccessor, IArticleFactory articleFactory, IArticleRepository articleRepository, IUserRepository userRepository, KbVaultLuceneHelper lucene, KbVaultAttachmentHelper attachmentHelper)
+        public ArticlesController(KnowledgeBaseContext context, IHttpContextAccessor httpContextAccessor, IArticleFactory articleFactory, IArticleRepository articleRepository, IUserRepository userRepository, IActivityRepository activityRepository, KbVaultLuceneHelper lucene, KbVaultAttachmentHelper attachmentHelper)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
             _articleFactory = articleFactory;
             _articleRepository = articleRepository;
             _userRepository = userRepository;
+            _activityRepository = activityRepository;
             _lucene = lucene;
             this.attachmentHelper = attachmentHelper;
         }
@@ -308,6 +310,11 @@ namespace KnowledgeBase.Controllers
 
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
+
+            //0109 - activity
+            _activityRepository.ArticleActivities(article, "deleted");
+
+
             return RedirectToAction(nameof(Index));
         }
 

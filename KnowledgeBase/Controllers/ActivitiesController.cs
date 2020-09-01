@@ -7,72 +7,154 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KnowledgeBase.Data;
 using KnowledgeBase.Models;
-using KnowledgeBase.ViewModels;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Authorization;
-using NLog;
 
 namespace KnowledgeBase.Controllers
 {
-    //[Authorize]
-    public class ActivityController : Controller//: KbVaultAdminController
-    {       
+    public class ActivitiesController : Controller
+    {
         private readonly KnowledgeBaseContext _context;
-        private static Logger log = LogManager.GetCurrentClassLogger();
-        public ActivityController(KnowledgeBaseContext context)
+
+        public ActivitiesController(KnowledgeBaseContext context)
         {
             _context = context;
         }
 
-        [Authorize(Roles = "Admin,Manager")]
-        public IActionResult Index()
+        // GET: Activities
+        public async Task<IActionResult> Index()
         {
+            var knowledgeBaseContext = _context.Activities.Include(a => a.Author).OrderByDescending(a => a.ActivityDate);
+            return View(await knowledgeBaseContext.ToListAsync());
+        }
+
+        // GET: Activities/Details/5
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var activity = await _context.Activities
+                .Include(a => a.Author)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (activity == null)
+            {
+                return NotFound();
+            }
+
+            return View(activity);
+        }
+
+        // GET: Activities/Create
+        public IActionResult Create()
+        {
+            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        [Authorize(Roles = "Admin,Manager")]
+        // POST: Activities/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public JsonResult Get(ActivityDataTablesPostModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,ActivityDate,Operation,Information,AuthorId")] Activity activity)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var length = model.length;
-                var page = model.start / length;
-                var result = new JsonOperationResponse();
-                //using (var db = new KbVaultContext(_config))
-                //{
-                    var recordCount = _context.Activities.Count();
-                //0408
-                //https://stackoverflow.com/questions/55234943/what-is-the-equivalent-of-configuration-proxycreationenabled-in-ef-core
-                //*****By default, EF Core won't use lazy load with proxy!!!
-                //db.Configuration.LazyLoadingEnabled = false;
-
-                //[AspNetUsers]
-                //var activities = _context.Activities.Include("KbUser")
-                    var activities = _context.Activities.Include("AspNetUsers")
-                                    .OrderByDescending(a => a.ActivityDate)
-                                    .Skip(page * length)
-                                    .Take(length).AsEnumerable()
-                                    .Select(a => new ActivityViewModel
-                                    {
-                                        ActivityDate = a.ActivityDate.ToString("dd/MM/yyyy H:mm"),
-                                        Operation = a.Operation,
-                                        Text = a.Information,
-                                        User = a.Author.UserName
-                                        //todo: first + lastname
-                                        //User = a.User.Name + " " + a.KbUser.LastName
-                                    }).ToList();
-                    result.Successful = true;
-                    result.Data = activities;
-                    return Json(new { recordsFiltered = recordCount, recordsTotal = recordCount, Successfull = result.Successful, ErrorMessage = result.ErrorMessage, data = ((List<ActivityViewModel>)result.Data).Select(aw => new[] { aw.ActivityDate, aw.Operation, aw.Text, aw.User }) });
-                //}
+                _context.Add(activity);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-                throw;
-            }
+            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", activity.AuthorId);
+            return View(activity);
         }
 
+        // GET: Activities/Edit/5
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var activity = await _context.Activities.FindAsync(id);
+            if (activity == null)
+            {
+                return NotFound();
+            }
+            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", activity.AuthorId);
+            return View(activity);
+        }
+
+        // POST: Activities/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, [Bind("Id,ActivityDate,Operation,Information,AuthorId")] Activity activity)
+        {
+            if (id != activity.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(activity);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ActivityExists(activity.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["AuthorId"] = new SelectList(_context.Users, "Id", "Id", activity.AuthorId);
+            return View(activity);
+        }
+
+        // GET: Activities/Delete/5
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var activity = await _context.Activities
+                .Include(a => a.Author)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (activity == null)
+            {
+                return NotFound();
+            }
+
+            return View(activity);
+        }
+
+        // POST: Activities/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            var activity = await _context.Activities.FindAsync(id);
+            _context.Activities.Remove(activity);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool ActivityExists(long id)
+        {
+            return _context.Activities.Any(e => e.Id == id);
+        }
     }
 }

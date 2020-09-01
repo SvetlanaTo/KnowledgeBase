@@ -2,12 +2,8 @@
 using KnowledgeBase.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace KnowledgeBase.Data 
+namespace KnowledgeBase.Data
 {
     public class KnowledgeBaseContext : IdentityDbContext<AppUser>
     {
@@ -24,7 +20,7 @@ namespace KnowledgeBase.Data
         public DbSet<Settings> Settings { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<SimilarArticle> SimilarArticles { get; set; }
-        public DbSet<TopTagItem> TopTagItems { get; set; } 
+        public DbSet<TopTagItem> TopTagItems { get; set; }
 
     }
 }

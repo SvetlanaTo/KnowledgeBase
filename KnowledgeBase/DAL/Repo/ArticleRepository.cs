@@ -15,14 +15,18 @@ namespace KnowledgeBase.DAL.Repo
     public class ArticleRepository : IArticleRepository //GenericRepository<Article>, IArticleRepository
     {
         private KnowledgeBaseContext _context;
-        //private KbVaultDalExtensions ext;
+        public IActivityRepository _activityRepository;
 
-        public ArticleRepository(KnowledgeBaseContext context)
+        public ArticleRepository(KnowledgeBaseContext context, IActivityRepository activityRepository)
         {
             _context = context;
+            _activityRepository = activityRepository;
         }
 
-        // public ArticleRepository(KnowledgeBaseContext context) : base(context) { }
+        //private KbVaultDalExtensions ext;
+
+
+
 
         public Article Get(long id)
         {
@@ -64,6 +68,8 @@ namespace KnowledgeBase.DAL.Repo
             }
 
             _context.SaveChanges();
+            //0109 - activity
+            _activityRepository.ArticleActivities(article, "added");
             return article.Id;
 
         }
@@ -86,6 +92,8 @@ namespace KnowledgeBase.DAL.Repo
 
             _context.SaveChanges();
 
+            //0109 - activity
+            _activityRepository.ArticleActivities(article, "updated");
         }
 
 

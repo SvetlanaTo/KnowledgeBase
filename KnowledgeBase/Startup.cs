@@ -152,6 +152,7 @@ namespace KnowledgeBase
             services.AddTransient(typeof(ISettingsRepository), typeof(SettingsRepository));
             services.AddTransient(typeof(ITagRepository), typeof(TagRepository));
             services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
+            services.AddTransient(typeof(IActivityRepository), typeof(ActivityRepository));
 
 
             services.AddTransient(typeof(ISettingsFactory), typeof(SettingsFactory));

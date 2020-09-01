@@ -60,13 +60,11 @@
                 {
                     <li>
                         <div>
-                            <a href='@Url.Action("Index", "Activity")'>
-                                <i class="fa fa-desktop"></i>
-                                @*@Resources.UIResources.LeftSideBarActivitiesTitle*@
-                                ActivitiesTitle - NIJE SREDJENO
-                            </a>
+
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Activities" asp-action="Index">Activities</a>
                         </div>
                     </li>
+
                     <li>
                         <div>
                             <a href="@Url.Action("Index","Backup")">
@@ -81,7 +79,7 @@
                             <a href="@Url.Action("Index","Indexing")">
                                 <i class="fa fa-book"></i>
                                 @*@Resources.UIResources.IndexingLeftMenuTitle*@
-                                MenuTitle - NIJE SREDJENO
+                                Index Management - NIJE SREDJENO
                             </a>
                         </div>
                     </li>
