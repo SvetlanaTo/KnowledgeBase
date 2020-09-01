@@ -73,8 +73,10 @@ namespace KnowledgeBase.Controllers
                     props.IsPersistent = model.RememberMe;
 
                     //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
+
+                    //testirati bez - VRATI SE
                     await signInManager.SignOutAsync();
-                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, model.Password, props.IsPersistent, false);
+                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, model.Password, model.RememberMe, false);
                     if (result.Succeeded)
                         return Redirect(model.ReturnUrl ?? "/");
 
@@ -91,8 +93,11 @@ namespace KnowledgeBase.Controllers
 
         public async Task<IActionResult> Logout()
         {
+            //testirati
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            //HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
+            //return RedirectToAction("Index", "Home");
         }
 
         public IActionResult AccessDenied()
