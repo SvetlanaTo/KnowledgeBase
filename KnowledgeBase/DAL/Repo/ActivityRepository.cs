@@ -39,7 +39,26 @@ namespace KnowledgeBase.DAL.Repo
             _context.SaveChanges();
         }
 
+        public void CategoryActivities(Category category, string v)
+        {
+            Activity activity = new Activity();
+            activity.ActivityDate = DateTime.Now;
+            if (v.Equals("added"))
+            {
+                activity.Operation = "Category - Added";
+            }
+            else if (v.Equals("updated"))
+            {
+                activity.Operation = "Category - Updated";
+            }
+            else
+                activity.Operation = "Category - Deleted";
 
+            activity.Information = "Title: " + category.Name + " Id:" + category.Id.ToString();
+            activity.AuthorId = category.AuthorId;
 
+            _context.Activities.Add(activity);
+            _context.SaveChanges();
+        }
     }
 }

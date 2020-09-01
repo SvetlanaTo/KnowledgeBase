@@ -9,5 +9,6 @@ namespace KnowledgeBase.DAL.Repo
     public interface IActivityRepository
     {
         void ArticleActivities(Article article, string v);
+        void CategoryActivities(Category category, string v);
     }
 }

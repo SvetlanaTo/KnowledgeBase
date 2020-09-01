@@ -26,13 +26,15 @@ namespace KnowledgeBase.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ICategoryFactory _categoryFactory;
         private ICategoryRepository _categoryRepository;
+        public IActivityRepository _activityRepository;
 
-        public CategoriesNewCodeController(KnowledgeBaseContext context, IHttpContextAccessor httpContextAccessor, ICategoryFactory categoryFactory, ICategoryRepository categoryRepository)
+        public CategoriesNewCodeController(KnowledgeBaseContext context, IHttpContextAccessor httpContextAccessor, ICategoryFactory categoryFactory, ICategoryRepository categoryRepository, IActivityRepository activityRepository)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
             _categoryFactory = categoryFactory;
             _categoryRepository = categoryRepository;
+            _activityRepository = activityRepository;
         }
 
         protected void ShowErrorMessage(string msg)
@@ -231,13 +233,17 @@ namespace KnowledgeBase.Controllers
                 {
                     _context.Categories.Remove(category);
                     await _context.SaveChangesAsync();
+
+                    //0109
+                    _activityRepository.CategoryActivities(category, "deleted");
+
                     return RedirectToAction(nameof(Index));
                 }
                 else
                 {
                     log.Info("Category Has Articles!");
                     //vrati se
-                    return BadRequest("Category Has Articles!");
+                    return BadRequest("Category or Its Children Has Articles!");
                 }
             }
             catch (Exception ex)

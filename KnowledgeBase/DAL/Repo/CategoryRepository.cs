@@ -12,20 +12,23 @@ namespace KnowledgeBase.DAL.Repo
     public class CategoryRepository : ICategoryRepository
     {
         private KnowledgeBaseContext _context;
+        public IActivityRepository _activityRepository;
 
-        public CategoryRepository(KnowledgeBaseContext context)
+        public CategoryRepository(KnowledgeBaseContext context, IActivityRepository activityRepository)
         {
             _context = context;
+            _activityRepository = activityRepository;
         }
 
         public int Add(Category category)
         {
-            //using (var db = new KnowledgeBaseContext(_config))
-            //{
             _context.Categories.Add(category);
             _context.SaveChanges();
+
+            //0109 - activity
+            _activityRepository.CategoryActivities(category, "added");
             return category.Id;
-            //}
+
         }
 
         public void Update(Category category)
@@ -42,6 +45,9 @@ namespace KnowledgeBase.DAL.Repo
                 cat.ParentCategoryId = category.ParentCategoryId;
                 cat.Icon = category.Icon;
                 _context.SaveChanges();
+
+                //0109 - activity
+                _activityRepository.CategoryActivities(category, "updated");
             }
             else
             {
@@ -101,11 +107,10 @@ namespace KnowledgeBase.DAL.Repo
                     }
                 }
             }
-
-            return _context.Articles.Any(a => a.CategoryId == categoryId || a.CategoryId == cat.ParentCategoryId);
-
-
-
+            //0109
+            //vrati se: mozda ako parent category ima article ipak treba da moze category da se obrise?
+            //return _context.Articles.Any(a => a.CategoryId == categoryId || a.CategoryId == cat.ParentCategoryId);
+            return _context.Articles.Any(a => a.CategoryId == categoryId);
         }
 
         public IList<Article> GetArticles(int categoryId)
@@ -116,24 +121,7 @@ namespace KnowledgeBase.DAL.Repo
             //}
         }
 
-        public bool Remove(Category category)
-        {
-            //using (var db = new KnowledgeBaseContext(_config))
-            //{
-            var cat = _context.Categories.FirstOrDefault(c => c.Id == category.Id);
-            if (cat != null)
-            {
-                cat.AuthorId = category.AuthorId;
-                _context.Categories.Remove(cat);
-                _context.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            //}
-        }
+
 
         public Category GetFirstCategory()
         {
@@ -156,6 +144,29 @@ namespace KnowledgeBase.DAL.Repo
             //using (var db = new KnowledgeBaseContext(_config))
             //{
             return _context.Categories.Include("Articles").Where(c => c.ParentCategoryId == null).OrderBy(c => c.Name).ToList();
+            //}
+        }
+
+        //stari kod
+        public bool Remove(Category category)
+        {
+            //using (var db = new KnowledgeBaseContext(_config))
+            //{
+            var cat = _context.Categories.FirstOrDefault(c => c.Id == category.Id);
+            if (cat != null)
+            {
+                cat.AuthorId = category.AuthorId;
+                _context.Categories.Remove(cat);
+                _context.SaveChanges();
+
+                //0109 - activity
+                _activityRepository.CategoryActivities(category, "deleted");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
             //}
         }
     }
