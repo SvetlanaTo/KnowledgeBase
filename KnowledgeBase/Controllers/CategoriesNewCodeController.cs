@@ -243,7 +243,7 @@ namespace KnowledgeBase.Controllers
                 {
                     log.Info("Category Has Articles!");
                     //vrati se
-                    return BadRequest("Category or Its Children Has Articles!");
+                    return BadRequest("Category Has Articles!");
                 }
             }
             catch (Exception ex)

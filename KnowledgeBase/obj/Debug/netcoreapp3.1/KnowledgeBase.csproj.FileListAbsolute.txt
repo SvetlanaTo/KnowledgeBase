@@ -5075,9 +5075,9 @@ D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeB
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\KnowledgeBase.dll
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\KnowledgeBase.pdb
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\KnowledgeBase.genruntimeconfig.cache
-D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\KnowledgeBase.csprojAssemblyReference.cache
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\Razor\Views\Activities\Create.cshtml.g.cs
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\Razor\Views\Activities\Delete.cshtml.g.cs
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\Razor\Views\Activities\Details.cshtml.g.cs
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\Razor\Views\Activities\Edit.cshtml.g.cs
 D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\Razor\Views\Activities\Index.cshtml.g.cs
+D:\Svetlana\2-Baza Znanja\00 - new era\stari kod\KnowledgeBase - 0109\KnowledgeBase\obj\Debug\netcoreapp3.1\KnowledgeBase.csprojAssemblyReference.cache

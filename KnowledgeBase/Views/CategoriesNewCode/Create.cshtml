@@ -5,6 +5,10 @@
     ViewData["Title"] = "Create";
 }
 
+@*@section Scripts{
+        $("#Name").slugIt({output:"#SefName",events:"blur", map :{"'":"-"}});
+    }*@
+
 <h1>Create</h1>
 
 <h4>Category</h4>
@@ -15,7 +19,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" id="Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -26,7 +30,7 @@
 
             <div class="form-group">
                 <label asp-for="SefName" class="control-label"></label>
-                <input asp-for="SefName" class="form-control" />
+                <input asp-for="SefName" class="form-control" id="SefName" />
                 <span asp-validation-for="SefName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,6 +55,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
